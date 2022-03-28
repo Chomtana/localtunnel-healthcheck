@@ -11,7 +11,7 @@ const axios = axiosRaw.create({ timeout: 2000 });
 const HOST = process.env.HOST
 
 async function runInner() {
-	const subdomain = fs.readFileSync(__dirname + '/subdomain', {encoding: 'utf-8'});
+	const subdomain = fs.readFileSync(__dirname + '/subdomain', {encoding: 'utf-8'}).trim();
 	try {
 		await axios.get('http://' + subdomain + '.' + HOST + process.env.HEALTHCHECK);
 	} catch (err) {
