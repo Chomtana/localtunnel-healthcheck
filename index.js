@@ -21,6 +21,7 @@ async function runInner() {
 		} catch (err2) {
 			console.error(err2);
 		}
+		await wait(3000);
 		const { stdout, stderr } = await exec('pm2 restart nodered-localtunnel');
 		console.log('stdout:', stdout);
 		console.error('stderr:', stderr);
