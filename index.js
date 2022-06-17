@@ -29,6 +29,8 @@ async function runInner() {
 }
 
 async function run() {
+	let startDate = Date.now();
+	
 	for (let i = 0; i < 5; i++) {
 		try {
 			await runInner();
@@ -37,6 +39,8 @@ async function run() {
 		}
 		
 		await wait(10000);
+		
+		if (Date.now() > startDate + 50000) break;
 	}
 }
 
