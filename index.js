@@ -21,7 +21,7 @@ async function runInner() {
 		} catch (err2) {
 			console.error(err2);
 		}
-		await wait(3000);
+		await wait(1000);
 		const { stdout, stderr } = await exec('pm2 restart nodered-localtunnel');
 		console.log('stdout:', stdout);
 		console.error('stderr:', stderr);
@@ -30,7 +30,12 @@ async function runInner() {
 
 async function run() {
 	for (let i = 0; i < 5; i++) {
-		runInner();
+		try {
+			await runInner();
+		} catch (err) {
+			console.error(err);	
+		}
+		
 		await wait(10000);
 	}
 }
