@@ -22,7 +22,7 @@ async function runInner() {
 			console.error(err2);
 		}
 		await wait(1000);
-		const { stdout, stderr } = await exec('pm2 restart nodered-localtunnel');
+		const { stdout, stderr } = await exec(__dirname + '/config.sh ' + subdomain);
 		console.log('stdout:', stdout);
 		console.error('stderr:', stderr);
 	}
