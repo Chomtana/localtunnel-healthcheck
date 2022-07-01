@@ -15,6 +15,7 @@ async function runInner() {
 	try {
 		await axios.get('http://' + subdomain + '.' + HOST + process.env.HEALTHCHECK);
 	} catch (err) {
+		console.error(err);
 		try {
 			await axios.get('http://' + subdomain + '.' + HOST + process.env.HEALTHCHECK);
 		} catch (err) {
