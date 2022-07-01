@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-const axios = axiosRaw.create({ timeout: 2000 });
+const axios = axiosRaw.create({ timeout: 10000 });
 
 const HOST = process.env.HOST
 
