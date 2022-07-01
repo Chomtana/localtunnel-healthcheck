@@ -10,6 +10,8 @@ const axios = axiosRaw.create({ timeout: 4000 });
 
 const HOST = process.env.HOST
 
+let count = 0;
+
 async function runInner() {
 	const subdomain = fs.readFileSync(__dirname + '/subdomain', {encoding: 'utf-8'}).trim();
 	try {
@@ -26,7 +28,8 @@ async function runInner() {
 				console.error(err2);
 			}
 			await wait(1000);
-			const { stdout, stderr } = await exec(__dirname + '/config.sh ' + subdomain);
+			count++;
+			const { stdout, stderr } = count >= 3 ? await exec(__dirname + '/config.sh ' + subdomain) : await exec('pm2 restart all');
 			console.log('stdout:', stdout);
 			console.error('stderr:', stderr);
 		}
