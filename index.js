@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-const axios = axiosRaw.create({ timeout: 10000 });
+const axios = axiosRaw.create({ timeout: 4000 });
 
 const HOST = process.env.HOST
 
@@ -15,16 +15,21 @@ async function runInner() {
 	try {
 		await axios.get('http://' + subdomain + '.' + HOST + process.env.HEALTHCHECK);
 	} catch (err) {
-		console.error(err);
 		try {
-			await axios.get('http://' + HOST + '/api/forceclose/' + subdomain);
-		} catch (err2) {
-			console.error(err2);
+			await axios.get('http://' + subdomain + '.' + HOST + process.env.HEALTHCHECK);
+		} catch (err) {
+			console.error(err);
+			try {
+				await axios.get('http://' + HOST + '/api/forceclose/' + subdomain);
+			} catch (err2) {
+				console.error(err2);
+			}
+			await wait(1000);
+			const { stdout, stderr } = await exec(__dirname + '/config.sh ' + subdomain);
+			console.log('stdout:', stdout);
+			console.error('stderr:', stderr);
 		}
-		await wait(1000);
-		const { stdout, stderr } = await exec(__dirname + '/config.sh ' + subdomain);
-		console.log('stdout:', stdout);
-		console.error('stderr:', stderr);
+
 	}
 }
 
