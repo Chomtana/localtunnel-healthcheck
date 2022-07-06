@@ -29,7 +29,7 @@ async function runInner() {
 			}
 			await wait(1000);
 			count++;
-			const { stdout, stderr } = count >= 3 ? await exec(__dirname + '/config.sh ' + subdomain) : await exec('pm2 restart all');
+			const { stdout, stderr } = count >= 2 ? await exec(__dirname + '/config.sh ' + subdomain) : await exec('pm2 restart all');
 			console.log('stdout:', stdout);
 			console.error('stderr:', stderr);
 		}
